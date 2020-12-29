@@ -29,7 +29,8 @@ public class TC_62 {
         searchBoxElement.sendKeys(Keys.ENTER);
 
         // verification if element displayed on the page
-     WebElement actualWebElement=   driver.findElement(By.xpath("//input[@name='FIND']"));
+    // WebElement actualWebElement=   driver.findElement(By.xpath("//input[@name='FIND']"));
+        WebElement actualWebElement=   driver.findElement(By.linkText("Marketing and advertising"));
 
      if(actualWebElement.isDisplayed()){
          System.out.println("Verification PASS");

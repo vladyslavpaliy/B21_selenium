@@ -12,16 +12,15 @@ import java.util.concurrent.TimeUnit;
 
 public class TC2_87 {
 
-   WebDriver driver;
+  WebDriver driver;
 
    @BeforeMethod
-   public void netBaseLoginPage(){
+   public void netBaseLoginPage() throws InterruptedException {
       //  Open Chrome browser
       WebDriverManager.chromedriver().setup();
-      WebDriver driver = new ChromeDriver();
-      driver.manage().window().maximize();
-      driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+      driver = new ChromeDriver();
       driver.get("http://login2.nextbasecrm.com/");
+      driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
       //  Verify title equals
       //  Expected: Authorization
       String expectedTitle = "Authorization";
@@ -32,6 +31,8 @@ public class TC2_87 {
          System.err.println("Landing page title verification FAILED!");
          System.out.println("Expected title = " + expectedTitle);
          System.out.println("Actual title = " + actualTitle);
+
+         Thread.sleep(3000);
       }
    }
 
@@ -39,7 +40,7 @@ public class TC2_87 {
    @Test
    public void negativeDataTest() throws InterruptedException {
 
-      ArrayList<String> usernamesNegative = new ArrayList<String>(Arrays.asList(
+      ArrayList<String> usernamesNegative = new ArrayList<>(Arrays.asList(
               "helpdesk4555@cybertekschool.com",
               "aaaaaabbbbcccc@gmail.com",
               "marketing1000@cybertekschool.com"));
@@ -59,7 +60,7 @@ public class TC2_87 {
          if (expectedText.equals(actualText)) {
             System.out.println("Text verification PASSED!");
          } else {
-            System.err.println("Text verification FAILED!!!");
+            System.err.println("Text verification FAILED!");
             System.out.println("ExpectedText = " + expectedText);
             System.out.println("ActualText = " + actualText);
          }
@@ -67,7 +68,8 @@ public class TC2_87 {
    }
 
    @AfterMethod // close driver
-   public void closeDriver(){
+   public void closeDriver() throws InterruptedException {
+     Thread.sleep(3000);
       driver.close();
    }
 

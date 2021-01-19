@@ -1,4 +1,4 @@
-package nextBaseCRM.Utility;
+package nextBaseCRM.utilities;
 //TASK: NEW METHOD CREATION
 //   Method name: getDriver
 //   Static method

@@ -1,19 +1,34 @@
 package nextBaseCRM.Jaden.UserStory4;
 
+import org.testng.annotations.*;
 import utilities.WebDriverFactory;
 import org.openqa.selenium.*;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class TC_104 {
    static WebDriver driver;
+   static WebElement poll;
+   static WebElement textBox;
+   static WebElement titleKey;
+   static WebElement title;
+   static WebElement question;
+   static WebElement answer1;
+    static WebElement answer2;
+    static  WebElement checkbox;
+    static  WebElement button;
+    static WebElement button2;
 
-    
+    public void selectTextBox(String s){
+        driver.switchTo().frame(0);
+        textBox=driver.findElement(By.xpath("//*[@contenteditable='true']"));
+        textBox.click();
+        textBox.sendKeys(s);
+        driver.switchTo().defaultContent();
+    }
+
     @BeforeMethod
     public void SetupMethod() {
         driver = WebDriverFactory.getDriver("chrome");
@@ -22,105 +37,102 @@ public class TC_104 {
         driver.findElement(By.xpath("//*[@id='login-popup']/form/div[1]/div[1]/input")).sendKeys("hr55@cybertekschool.com");
         driver.findElement(By.xpath("//*[@id='login-popup']/form/div[1]/div[2]/input")).sendKeys("UserUser" + Keys.ENTER);
         driver.findElement(By.xpath("//*[@id='user-block']")).click();
+        driver.manage().timeouts().implicitlyWait(15L,TimeUnit.SECONDS);
+        poll = driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]"));
+        poll.click();
+        driver.manage().timeouts().implicitlyWait(15L,TimeUnit.SECONDS);
+        question =  driver.findElement(By.xpath("//*[@id=\"question_0\"]"));
+        titleKey = driver.findElement(By.xpath("//*[@id=\"lhe_button_title_blogPostForm\"]"));
+        title = driver.findElement(By.name("POST_TITLE"));
+        answer1 = driver.findElement(By.xpath("//input[@placeholder='Answer  1']"));
+        answer2 = driver.findElement(By.xpath("//input[@placeholder='Answer  2']"));
+        checkbox = driver.findElement(By.xpath("//*[@id=\"multi_0\"]"));
+        button = driver.findElement(By.xpath("//*[@id=\"blog-submit-button-cancel\"]"));
+        button2 = driver.findElement(By.xpath("//*[@id=\"blog-submit-button-save\"]"));
+
     }
 
     @Test
-    public void T1_BodyText() throws InterruptedException {
-        driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
+    public void T1_TitleText()throws InterruptedException{
+        title.clear();
+       try {
+           try{
+               title.clear();
+               poll.click();
+               Thread.sleep(3000);
+               title.sendKeys("TEST");
 
-        Thread.sleep(3000);
-       WebElement textBox = driver.switchTo().frame(0).findElement(By.xpath("//*[@contenteditable='true']"));
-        
-        try {
-            textBox.clear();
-            Thread.sleep(500);
-            textBox.sendKeys("TEST");
-            driver.manage().timeouts().implicitlyWait(15L, TimeUnit.SECONDS);
-        } catch (NoSuchElementException e) {
-            System.out.println("asdasd"+ e);
+           } catch (NoSuchElementException a){
+               title.clear();
+               poll.click();
+               Thread.sleep(3000);
+               title.sendKeys("TEST");
 
-            driver.switchTo().defaultContent();
-            driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
+           }
+       }catch (ElementNotInteractableException e){
+           try{
+               title.clear();
+               poll.click();
+               Thread.sleep(3000);
+               title.sendKeys("TEST");
 
-           textBox.clear();
-            Thread.sleep(500);
-            textBox.sendKeys("Test");
-            Thread.sleep(500);
-          textBox.clear();
-            Thread.sleep(500);
-            textBox.sendKeys("TEST");
+           } catch (NoSuchElementException a){
+               title.clear();
+               poll.click();
+               Thread.sleep(3000);
+               title.sendKeys("TEST");
+           }
         }
-Assert.assertEquals(textBox.getText(),"TEST");
-    }
-
+}
     @Test
-    public void T2_TitleText()throws InterruptedException{
-       WebElement poll = driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")) ;
-       poll.click();
-       driver.manage().timeouts().implicitlyWait(15L, TimeUnit.SECONDS);
-       WebElement title = driver.findElement(By.xpath("//input[@id='POST_TITLE']"));
-       WebElement titleKey = driver.findElement(By.xpath("//*[@id=\"lhe_button_title_blogPostForm\"]"));
+    public void T2_BodyText() throws InterruptedException {
+
         try{
-            driver.switchTo().defaultContent();
             poll.click();
             Thread.sleep(3000);
-            try{
-                title.clear();
-            }catch (NoSuchElementException e){
-                titleKey.click();
-            }
-                title.sendKeys("TEST");
-
-        }catch (ElementNotInteractableException e){
-
-            driver.switchTo().defaultContent();
-          poll.click();
+            selectTextBox("TEST");
+        }catch ( NoSuchElementException a){
+            poll.click();
             Thread.sleep(3000);
-            try{
-               title.clear();
-            }catch (NoSuchElementException d){
+            selectTextBox("TEST");
 
-                titleKey.click();
-
-            }
-            title.sendKeys("TEST");
         }
-
+        driver.switchTo().frame(0);
+        Assert.assertEquals(textBox.getText(),"TEST");
     }
-
     @Test
     public void T3_QuestionText() throws InterruptedException {
         try {
             try {
-                driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
+                poll.click();
                 Thread.sleep(3000);
-                WebElement question = driver.findElement(By.xpath("//*[@id=\"question_0\"]"));
                 question.clear();
                 question.sendKeys("Question");
+
             } catch (NoSuchElementException e) {
 
-                driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
+                poll.click();
                 Thread.sleep(3000);
-                WebElement question = driver.findElement(By.xpath("//*[@id=\"question_0\"]"));
                 question.clear();
                 question.sendKeys("Question");
+
             }
 
         } catch (ElementNotInteractableException a) {
 
             try {
-                driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
+                poll.click();
                 Thread.sleep(3000);
-                WebElement question = driver.findElement(By.xpath("//*[@id=\"question_0\"]"));
-                question.clear();
-
-            } catch (NoSuchElementException e) {
-
-                driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
-                Thread.sleep(3000);
-                WebElement question = driver.findElement(By.xpath("//*[@id=\"question_0\"]"));
                 question.clear();
                 question.sendKeys("Question");
+                Thread.sleep(3000);
+            } catch (NoSuchElementException e) {
+
+                poll.click();
+                Thread.sleep(3000);
+                question.clear();
+                question.sendKeys("Question");
+                Thread.sleep(3000);
             }
         }
     }
@@ -128,50 +140,29 @@ Assert.assertEquals(textBox.getText(),"TEST");
     @Test
     public void T4_AnswerText() throws InterruptedException {
         try {
-            driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
+            poll.click();
             Thread.sleep(3000);
-            driver.findElement(By.xpath("//input[@placeholder='Answer  1']")).clear();
-            driver.findElement(By.xpath("//input[@placeholder='Answer  2']")).clear();
-            driver.findElement(By.xpath("//input[@placeholder='Answer  1']"))
-                    .sendKeys("Answer1");
-            driver.findElement(By.xpath("//input[@placeholder='Answer  2']"))
-                    .sendKeys("Answer2");
-            driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
-            Thread.sleep(3000);
-            driver.findElement(By.xpath("//input[@placeholder='Answer  1']")).clear();
-            driver.findElement(By.xpath("//input[@placeholder='Answer  2']")).clear();
-            driver.findElement(By.xpath("//input[@placeholder='Answer  1']"))
-                    .sendKeys("Answer1");
-            driver.findElement(By.xpath("//input[@placeholder='Answer  2']"))
-                    .sendKeys("Answer2");
+           answer1.clear();
+            answer2.clear();
+           answer1.sendKeys("Answer1");
+           answer2.sendKeys("Answer2");
+
         } catch (ElementNotInteractableException e) {
 
+            poll.click();
+            Thread.sleep(3000);
+            answer1.clear();
+            answer2.clear();
+            answer1.sendKeys("Answer1");
+            answer2.sendKeys("Answer2");
 
-            driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
-            Thread.sleep(3000);
-            driver.findElement(By.xpath("//input[@placeholder='Answer  1']")).clear();
-            driver.findElement(By.xpath("//input[@placeholder='Answer  2']")).clear();
-            driver.findElement(By.xpath("//input[@placeholder='Answer  1']"))
-                    .sendKeys("Answer1");
-            driver.findElement(By.xpath("//input[@placeholder='Answer  2']"))
-                    .sendKeys("Answer2");
-            driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
-            Thread.sleep(3000);
-            driver.findElement(By.xpath("//input[@placeholder='Answer  1']")).clear();
-            driver.findElement(By.xpath("//input[@placeholder='Answer  2']")).clear();
-            driver.findElement(By.xpath("//input[@placeholder='Answer  1']"))
-                    .sendKeys("Answer1");
-            driver.findElement(By.xpath("//input[@placeholder='Answer  2']"))
-                    .sendKeys("Answer2");
         }
     }
 
     @Test
     public void T5_Checkbox() throws InterruptedException {
-
-        driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
+        poll.click();
         Thread.sleep(2000);
-        WebElement checkbox = driver.findElement(By.xpath("//*[@id=\"multi_0\"]"));
         checkbox.click();
         checkbox.click();
         Assert.assertFalse(checkbox.isSelected());
@@ -180,26 +171,54 @@ Assert.assertEquals(textBox.getText(),"TEST");
     @Test
      public void T6_CanCancel() throws InterruptedException {
         try {
-            driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
+            poll.click();
             Thread.sleep(2000);
-            WebElement button = driver.findElement(By.xpath("//*[@id=\"blog-submit-button-cancel\"]"));
             button.click();
-            driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
-            Thread.sleep(2000);
+            poll.click();
             button.click();
         } catch (NoSuchElementException e) {
-            driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
+            poll.click();
             Thread.sleep(2000);
-            WebElement button = driver.findElement(By.xpath("//*[@id=\"blog-submit-button-cancel\"]"));
             button.click();
-            driver.findElement(By.xpath("//*[@id=\"feed-add-post-form-tab-vote\"]")).click();
-            Thread.sleep(2000);
+            poll.click();
             button.click();
         }
     }
+    @Test
+    public void T7_FullTest()throws InterruptedException{
+        try {
+            poll.click();
+            Thread.sleep(2000);
+            title.sendKeys("TITLETEST");
+            selectTextBox("BODYTEST");
+            question.sendKeys("QUESTIONTEST");
+            answer1.sendKeys("TESTANS1");
+            answer2.sendKeys("TESTANS2");
+            checkbox.click();
+            button2.click();
+
+        } catch (NoSuchElementException e ){
+            poll.click();
+            Thread.sleep(2000);
+            title.sendKeys("TITLETEST");
+            selectTextBox("BODYTEST");
+            question.sendKeys("QUESTIONTEST");
+            answer1.sendKeys("TESTANS1");
+            answer2.sendKeys("TESTANS2");
+            checkbox.click();
+            button2.click();
+        }
+    }
+    @Test
+    public void T8_CanDelete()throws InterruptedException{
+    driver.findElement(By.xpath("//span[contains(@id,'feed-post-more')][1]")).click();
+    driver.findElement(By.xpath("//span[contains(@class,'menu-popup-no-icon')][5]")).click();
+    //WILL THROW AN ALERT//
+    }
 
     @AfterMethod
-    public void TearDownMethod() {
+    public void TearDownMethod()throws InterruptedException {
+        Thread.sleep(2000);
         driver.close();
     }
 

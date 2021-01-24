@@ -1,17 +1,14 @@
-package nextBaseCRM.Vlad.UserStory1;
+package nextBaseCRM.Utility;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-public class loginForHelpDesk {
+public class login_helpDesk_hr_market {
     WebDriver driver;
 
     @Test
@@ -32,17 +29,24 @@ public class loginForHelpDesk {
             System.out.println("Expected title = " + expectedTitle);
             System.out.println("Actual title = " + actualTitle);
         }
-            Thread.sleep(3000);
-            //=====================================================================
-            // Data for login
-            String login = "helpdesk50@cybertekschool.com";
-            // Data for password
-            String password = "UserUser";
-                // type User name
-                driver.findElement(By.name("USER_LOGIN")).sendKeys(login);
-                // type Password
-                driver.findElement(By.name("USER_PASSWORD")).sendKeys(password);
-            // Click login button
-            driver.findElement(By.className("login-btn")).click();
-        }
+        Thread.sleep(3000);
+        //=====================================================================
+        // Data for login
+        // OR
+        // Usernames: helpdesk49@cybertekschool.com
+        //           helpdesk50@cybertekschool.com
+        //           marketing49@cybertekschool.com
+        //           marketing50@cybertekschool.com
+        //           hr49@cybertekschool.com
+        //           hr50@cybertekschool.com
+        String login = "helpdesk50@cybertekschool.com";
+        // Data for password
+        String password = "UserUser";
+        // type User name
+        driver.findElement(By.name("USER_LOGIN")).sendKeys(login);
+        // type Password
+        driver.findElement(By.name("USER_PASSWORD")).sendKeys(password);
+        // Click login button
+        driver.findElement(By.className("login-btn")).click();
     }
+}

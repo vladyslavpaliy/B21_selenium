@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 
-public class TC1_2_3_4 {
+public class userStory1 {
     WebDriver driver;
 
     @BeforeMethod

@@ -24,8 +24,6 @@ public class TC_US65 {
     }
 
 
-
-
     @Test(priority = 1 , description = "sending the message")
     public void testMessageButtonWithRecipient() {
         //locate and click on Message tab
@@ -103,7 +101,6 @@ public class TC_US65 {
         send.click();
         Assert.assertTrue(driver.findElement(By.xpath("//*[text()='"+webSite+"']")).isDisplayed());
     }
-
 
     @Test(priority = 4 , description = "canceling the message")
     public void cancelButton()  {

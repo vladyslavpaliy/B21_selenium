@@ -11,7 +11,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class TC_US65 {
-    WebDriver driver;
+    WebDriver driver = Driver.get();
     Faker faker = new Faker();
 
     @BeforeMethod

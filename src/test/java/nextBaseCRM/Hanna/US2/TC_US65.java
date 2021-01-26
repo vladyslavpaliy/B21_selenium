@@ -1,7 +1,8 @@
 package nextBaseCRM.Hanna.US2;
 
 import com.github.javafaker.Faker;
-import nextBaseCRM.Utility.NextBaseCRM_Utilities;
+import utilities.BrowserUtils;
+import utilities.NextBaseCRM_Utilities;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,9 +13,9 @@ import org.testng.annotations.Test;
 import utilities.WebDriverFactory;
 
 public class TC_US65 {
-
     WebDriver driver;
     Faker faker = new Faker();
+
     @BeforeMethod
     public void setUpMethod(){
         driver= WebDriverFactory.getDriver("Chrome");
@@ -25,12 +26,10 @@ public class TC_US65 {
 
 
 
-    @Test
-    public void testMessageButtonWithRecipient() throws InterruptedException {
+    @Test(priority = 1 , description = "sending the message")
+    public void testMessageButtonWithRecipient() {
         //locate and click on Message tab
-        WebElement messageButton = driver.findElement(By.xpath("//span[@class='feed-add-post-form-link feed-add-post-form-link-active']"));
-        messageButton.click();
-        Thread.sleep(3000);
+        NextBaseCRM_Utilities.messageButton(driver);
 
         //creating a faker to send message
 
@@ -39,7 +38,7 @@ public class TC_US65 {
         driver.findElement(By.xpath("//body[@contenteditable='true']")).clear();
         driver.findElement(By.xpath("//body[@contenteditable='true']")).sendKeys(msg);
         driver.switchTo().defaultContent();
-        Thread.sleep(3000);
+        BrowserUtils.wait(2);
 
         //locate the recipient box
         WebElement recipientBox = driver.findElement(By.xpath("//a[@class='feed-add-destination-link']"));
@@ -51,10 +50,10 @@ public class TC_US65 {
         //close recipient window
         WebElement closeWindow = driver.findElement(By.xpath("//span[@class='popup-window-close-icon']"));
         closeWindow.click();
-        Thread.sleep(3000);
+        BrowserUtils.wait(2);
 
         //send message
-        Thread.sleep(3000);
+
         WebElement send = driver.findElement(By.xpath("//button[@id='blog-submit-button-save']"));
         send.click();
 
@@ -62,24 +61,22 @@ public class TC_US65 {
 
     }
 
-    @Test
-    public void testTxtLink() throws InterruptedException {
-        WebElement messageButton = driver.findElement(By.xpath("//span[@class='feed-add-post-form-link feed-add-post-form-link-active']"));
-        messageButton.click();
-        Thread.sleep(3000);
+    @Test(priority = 2 , description = "sending the message with txt link")
+    public void testTxtLink()  {
+        NextBaseCRM_Utilities.messageButton(driver);
         //locate link attachment and click
         WebElement link = driver.findElement(By.xpath("//span[@id='bx-b-link-blogPostForm']//i"));
         link.click();
-        Thread.sleep(3000);
+        BrowserUtils.wait(2);
         //locate text
         String txt = faker.internet().url();
         WebElement txtBox = driver.findElement(By.xpath("//td//input[@id='linkidPostFormLHE_blogPostForm-text']"));
         txtBox.sendKeys(txt);
-        Thread.sleep(3000);
+        BrowserUtils.wait(2);
 
         WebElement save = driver.findElement(By.xpath("//input[@class='adm-btn-save']"));
         save.click();
-        Thread.sleep(3000);
+        BrowserUtils.wait(2);
 
         WebElement send = driver.findElement(By.xpath("//button[@id='blog-submit-button-save']"));
         send.click();
@@ -87,14 +84,13 @@ public class TC_US65 {
         Assert.assertTrue(driver.findElement(By.xpath("//*[text()='"+txt+"']")).isDisplayed());
 
     }
-    @Test
-    public void testUrlLink() throws InterruptedException {
-        WebElement messageButton = driver.findElement(By.xpath("//span[@class='feed-add-post-form-link feed-add-post-form-link-active']"));
-        messageButton.click();
-        Thread.sleep(3000);
+    @Test(priority = 3 , description = "sending the message with URL link")
+    public void testUrlLink()  {
+        NextBaseCRM_Utilities.messageButton(driver);
+        BrowserUtils.wait(2);
         WebElement link = driver.findElement(By.xpath("//span[@id='bx-b-link-blogPostForm']//i"));
         link.click();
-        Thread.sleep(3000);
+        BrowserUtils.wait(2);
 
         //locate URL box and type the link
         String webSite= faker.internet().url();
@@ -109,12 +105,9 @@ public class TC_US65 {
     }
 
 
-    @Test
-    public void cancelButton() throws InterruptedException {
-        //locate and click on Message tab
-        WebElement messageButton = driver.findElement(By.xpath("//span[@class='feed-add-post-form-link feed-add-post-form-link-active']"));
-        messageButton.click();
-        Thread.sleep(3000);
+    @Test(priority = 4 , description = "canceling the message")
+    public void cancelButton()  {
+        NextBaseCRM_Utilities.messageButton(driver);
 
         //creating a faker to send message
 
@@ -123,7 +116,7 @@ public class TC_US65 {
         driver.findElement(By.xpath("//body[@contenteditable='true']")).clear();
         driver.findElement(By.xpath("//body[@contenteditable='true']")).sendKeys(msg);
         driver.switchTo().defaultContent();
-        Thread.sleep(3000);
+        BrowserUtils.wait(2);
 
         WebElement cancelButton = driver.findElement(By.id("blog-submit-button-cancel"));
         cancelButton.click();
@@ -132,22 +125,15 @@ public class TC_US65 {
 
     }
 
-    @Test
-    public void testMessageButtonWithNoTxt() throws InterruptedException {
-        //locate and click on Message tab
-        WebElement messageButton = driver.findElement(By.xpath("//span[@class='feed-add-post-form-link feed-add-post-form-link-active']"));
-        messageButton.click();
-        Thread.sleep(3000);
+    @Test(priority = 5 ,description = "negative path , message with no txt")
+    public void testMessageButtonWithNoTxt()  {
+       NextBaseCRM_Utilities.messageButton(driver);
 
-        //creating a faker to send message
-
-       // String msg = faker.lorem().fixedString(8);
         driver.switchTo().frame(driver.findElement(By.className("bx-editor-iframe")));
         driver.findElement(By.xpath("//body[@contenteditable='true']")).clear();
         driver.findElement(By.xpath("//body[@contenteditable='true']")).sendKeys("");
         driver.switchTo().defaultContent();
-        Thread.sleep(3000);
-
+        BrowserUtils.wait(2);
 
         WebElement send = driver.findElement(By.xpath("//button[@id='blog-submit-button-save']"));
         send.click();
@@ -155,12 +141,9 @@ public class TC_US65 {
         Assert.assertTrue(driver.findElement(By.xpath("//*[text()='The message title is not specified']")).isDisplayed());
     }
 
-    @Test
-    public void testSendMessageWithNoRecipient() throws InterruptedException {
-        //locate and click on Message tab
-        WebElement messageButton = driver.findElement(By.xpath("//span[@class='feed-add-post-form-link feed-add-post-form-link-active']"));
-        messageButton.click();
-        Thread.sleep(3000);
+    @Test(priority = 6 , description = "negative path , sending message with no recipient ")
+    public void testSendMessageWithNoRecipient()  {
+        NextBaseCRM_Utilities.messageButton(driver);
 
         //creating a faker to send message
 
@@ -169,7 +152,7 @@ public class TC_US65 {
         driver.findElement(By.xpath("//body[@contenteditable='true']")).clear();
         driver.findElement(By.xpath("//body[@contenteditable='true']")).sendKeys(msg);
         driver.switchTo().defaultContent();
-        Thread.sleep(3000);
+        BrowserUtils.wait(2);
 
         WebElement cancelRecipient = driver.findElement(By.className("feed-add-post-del-but"));
         cancelRecipient.click();
@@ -185,8 +168,7 @@ public class TC_US65 {
     }
 
     @AfterMethod
-    public void tearDownMethod() throws InterruptedException {
-        Thread.sleep(3000);
+    public void tearDownMethod()  {
        driver.quit();
     }
 }

@@ -1,4 +1,4 @@
-package nextBaseCRM.Utility;
+package utilities;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -31,5 +31,12 @@ public class NextBaseCRM_Utilities {
         driver.manage().window().maximize();
         //implicit wait
         driver.manage().timeouts().implicitlyWait(15, TimeUnit.SECONDS);
+    }
+
+    //locate and click on message button
+    public static void messageButton(WebDriver driver){
+        WebElement messageButton = driver.findElement(By.xpath("//span[@class='feed-add-post-form-link feed-add-post-form-link-active']"));
+        messageButton.click();
+        BrowserUtils.wait(2);
     }
 }

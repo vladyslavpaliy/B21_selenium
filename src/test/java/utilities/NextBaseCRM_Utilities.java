@@ -14,10 +14,10 @@ public class NextBaseCRM_Utilities {
 
         //enter username
         WebElement inputUsername = driver.findElement(By.xpath("//input[@name='USER_LOGIN']"));
-        inputUsername.sendKeys("helpdesk49@cybertekschool.com");
+        inputUsername.sendKeys(ConfigurationReader.getProperty("user_name"));
         //enter password
         WebElement inputPassword = driver.findElement(By.xpath("//input[@name='USER_PASSWORD']"));
-        inputPassword.sendKeys("UserUser");
+        inputPassword.sendKeys(ConfigurationReader.getProperty("password"));
         //locate and click login
         WebElement logIn = driver.findElement(By.xpath("//input[@type='submit']"));
         logIn.click();
@@ -26,7 +26,7 @@ public class NextBaseCRM_Utilities {
     //get the link
     public static void getTheLinkNextBaseCRM(WebDriver driver){
 
-        driver.get("https://login2.nextbasecrm.com/");
+        driver.get(ConfigurationReader.getProperty("url"));
 
         driver.manage().window().maximize();
         //implicit wait

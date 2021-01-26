@@ -1,8 +1,7 @@
 package nextBaseCRM.Hanna.US2;
 
 import com.github.javafaker.Faker;
-import utilities.BrowserUtils;
-import utilities.NextBaseCRM_Utilities;
+import utilities.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +9,6 @@ import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import utilities.WebDriverFactory;
 
 public class TC_US65 {
     WebDriver driver;
@@ -18,8 +16,9 @@ public class TC_US65 {
 
     @BeforeMethod
     public void setUpMethod(){
-        driver= WebDriverFactory.getDriver("Chrome");
-        NextBaseCRM_Utilities.getTheLinkNextBaseCRM(driver);
+        //Driver.get()-->webDriver object
+        //get() we call webDriver object
+        Driver.get().get(ConfigurationReader.getProperty("url"));
         NextBaseCRM_Utilities.loginToNextBaseCRM(driver);
     }
 
@@ -166,6 +165,6 @@ public class TC_US65 {
 
     @AfterMethod
     public void tearDownMethod()  {
-       driver.quit();
+       Driver.close();
     }
 }

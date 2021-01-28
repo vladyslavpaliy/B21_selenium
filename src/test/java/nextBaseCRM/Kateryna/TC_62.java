@@ -24,7 +24,7 @@ public class TC_62 {
         //search box verification with valid document name
 
         WebElement searchBoxElement=driver.findElement(By.xpath("//*[@name='q']"));
-       searchBoxElement.sendKeys("marketing and advertising");
+         searchBoxElement.sendKeys("marketing and advertising");
         Thread.sleep(3000);
         searchBoxElement.sendKeys(Keys.ENTER);
 
